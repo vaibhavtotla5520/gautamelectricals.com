@@ -39,6 +39,7 @@ class Main {
 
     public function add_product(){
         // add product
+        $conn = $this->connect_db();
         return 'status';
     }
 

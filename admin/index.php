@@ -1,3 +1,11 @@
+<?php
+  session_start();
+  if(isset($_SESSION['username'])) {
+    header('location:admin.php');
+  } //else {
+    // $headings = $_SESSION['username'];
+  // }
+?>
 <!doctype html>
 <html lang="en">
   <head>

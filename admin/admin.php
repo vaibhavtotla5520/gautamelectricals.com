@@ -75,40 +75,40 @@
 <!-- add section starts -->
         <div id="add" class="container">
           <h6>Add</h6>
-          <form id="add_form" action="RequestHandler.php" method="post">
+          <form id="add_form" action="RequestHandler.php" method="post" enctype="multipart/form-data">
             <div class="form-group">
               <label for="exampleFormControlInput1">Product ID</label>
-              <input type="text" class="form-control" placeholder="Product ID">
+              <input type="text" class="form-control" placeholder="Product ID" name="product_id">
             </div>
             <div class="form-group">
               <label for="exampleFormControlInput1">Name</label>
-              <input type="text" class="form-control" placeholder="Name">
+              <input type="text" class="form-control" placeholder="Name" name="name">
             </div>
             <div class="form-group">
               <label for="exampleFormControlTextarea1">Description</label>
-              <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" placeholder="Write here"></textarea>
+              <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" placeholder="Write here" name="description"></textarea>
             </div>
             <div class="form-group">
               <label for="exampleFormControlInput1">Price</label>
-              <input type="text" class="form-control" placeholder=" Rs/-">
+              <input type="text" class="form-control" placeholder=" Rs/-" name="price">
             </div>
             <div class="form-group">
               <label for="exampleFormControlFile1">Image</label>
-              <input type="file" class="form-control-file" id="exampleFormControlFile1">
+              <input type="file" class="form-control-file" id="product_image" name="product_image">
             </div>
             <div class="form-group">
               <label for="exampleFormControlInput1">Category</label>
-              <input type="text" class="form-control" placeholder="Category">
+              <input type="text" class="form-control" placeholder="Category" name="category">
             </div>
             <div class="form-group">
               <label for="exampleFormControlSelect1">Page</label>
-              <select class="form-control" id="exampleFormControlSelect1">
-                <option>Products</option>
-                <option>Home</option>
-                <option>Manufacture</option>
+              <select class="form-control" id="exampleFormControlSelect1" name="page">
+                <option value="products">Products</option>
+                <option value="home">Home</option>
+                <option value="manufacture">Manufacture</option>
               </select>
             </div>
-            <button type="submit" class="btn btn-primary">Add</button>
+            <button type="submit" class="btn btn-success" name="request_for_add" value="request_for_add">Add</button>
           </form>
         </div>
         <!-- add section ends -->
@@ -118,7 +118,7 @@
           <h6>Enter ID of Product which you want to Edit :</h6>
           <form class="form-inline my-2 my-lg-0">
             <input class="form-control mr-sm-2" type="search" placeholder="Product ID" aria-label="Search">
-            <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+            <button class="btn btn-outline-warning my-2 my-sm-0" type="submit">Search</button>
           </form>
           <!-- <form id="for_edit">
           <div class="form-group">
@@ -163,7 +163,7 @@
         <h6 for="exampleFormControlInput1">Enter ID of Product which you want to delete :</h6>
         <form class="form-inline my-2 my-lg-0">
           <input class="form-control mr-sm-2" type="search" placeholder="Product ID" aria-label="Search">
-          <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+          <button class="btn btn-outline-danger my-2 my-sm-0" type="submit">Search</button>
         </form>
       </div>
       <!-- delete section ends -->
