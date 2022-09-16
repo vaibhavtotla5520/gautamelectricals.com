@@ -77,31 +77,31 @@
           <h6>Add</h6>
           <form id="add_form" action="RequestHandler.php" method="post" enctype="multipart/form-data">
             <div class="form-group">
-              <label for="exampleFormControlInput1">Product ID</label>
-              <input type="text" class="form-control" placeholder="Product ID" name="product_id">
+              <label for="product_id">Product ID</label>
+              <input type="text" class="form-control" placeholder="Product ID" name="product_id" Required>
             </div>
             <div class="form-group">
-              <label for="exampleFormControlInput1">Name</label>
-              <input type="text" class="form-control" placeholder="Name" name="name">
+              <label for="name">Name</label>
+              <input type="text" class="form-control" placeholder="Name" name="name" Required>
             </div>
             <div class="form-group">
-              <label for="exampleFormControlTextarea1">Description</label>
-              <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" placeholder="Write here" name="description"></textarea>
+              <label for="description">Description</label>
+              <textarea class="form-control" rows="3" placeholder="Write here" name="description"></textarea>
             </div>
             <div class="form-group">
-              <label for="exampleFormControlInput1">Price</label>
+              <label for="price">Price</label>
               <input type="text" class="form-control" placeholder=" Rs/-" name="price">
             </div>
             <div class="form-group">
-              <label for="exampleFormControlFile1">Image</label>
-              <input type="file" class="form-control-file" id="product_image" name="product_image">
+              <label for="product_image">Image</label>
+              <input type="file" class="form-control-file" name="product_image" Required>
             </div>
             <div class="form-group">
-              <label for="exampleFormControlInput1">Category</label>
+              <label for="category">Category</label>
               <input type="text" class="form-control" placeholder="Category" name="category">
             </div>
             <div class="form-group">
-              <label for="exampleFormControlSelect1">Page</label>
+              <label for="page">Page</label>
               <select class="form-control" id="exampleFormControlSelect1" name="page">
                 <option value="products">Products</option>
                 <option value="home">Home</option>

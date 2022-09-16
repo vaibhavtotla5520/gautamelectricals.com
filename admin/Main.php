@@ -24,11 +24,11 @@ class Main {
             $_SESSION['username'] = $row['username'];
             $_SESSION['user_id'] = $row['id'];
           }
+          $conn->close();
           return true;
         } else {
           return "User Not Found";
         }
-        $conn->close();
         // return true;
     }
 
@@ -37,10 +37,17 @@ class Main {
       return true;
     }
 
-    public function add_product(){
+    public function add_product($product_id,$name,$description,$price,$image,$category,$page){
         // add product
         $conn = $this->connect_db();
-        return 'status';
+        $sql = "INSERT INTO products_ge (product_id,name,description,price,image,category,page,status) 
+        VALUES ('$product_id','$name','$description','$price','$image','$category','$page','Publish');";
+        if ($conn->query($sql) === TRUE) {
+          $conn->close();
+          return true;
+        } else {
+          return "Error: " . $sql . "<br>" . $conn->error;
+        }
     }
 
     public function show_product(){

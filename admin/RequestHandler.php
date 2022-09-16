@@ -19,7 +19,15 @@ if(isset($_POST['request_for_add'])) {
     if(move_uploaded_file($_FILES["product_image"]["tmp_name"], "assets/images/".$name)) {
       // uploaded
       $result = $callTo->add_product($_POST['product_id'],$_POST['name'],$_POST['description'],$_POST['price'],$name,$_POST['category'],$_POST['page']);
-      echo $result;
+      if($result) {
+        echo "<script>window.alert('Added ,click ok');</script>";
+        header('location:admin.php');
+      } else {
+        echo $result;
+      }
+    } else {
+      echo "<script>window.alert('not uploaded ,try again');</script>";
+      header('location:admin.php');
     }
   }
 }
