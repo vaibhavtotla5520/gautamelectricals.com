@@ -1,9 +1,16 @@
 <?php
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
   session_start();
   if(!isset($_SESSION['username'])) {
     header('location:index.php');
   } else {
     $headings = $_SESSION['username'];
+  }
+
+  if(isset($_GET['msg'])) {
+    echo "<script>alert('".$_GET['msg']."');</script>";
   }
 ?>
 <!doctype html>
@@ -18,7 +25,7 @@
     <!-- <link rel="stylesheet" href="path/to/font-awesome/css/font-awesome.min.css"> -->
     <title>Admin</title>
     <style>
-        #add,#edit,#delete {
+        #add,#edit,#delete,#show {
             display: none;
         }
     </style>
@@ -57,17 +64,8 @@
                   <th scope="col">Status</th>
                 </tr>
               </thead>
-              <tbody>
-                <tr>
-                  <th scope="row">00001</th>
-                  <td>MCCB BCH Single Phase 6A</td>
-                  <td>Details for products</td>
-                  <td>299/-Rs</td>
-                  <td>assets/image/pathtoimg.jpg</td>
-                  <td>Equipment</td>
-                  <td>Home</td>
-                  <td><button class="btn btn-secondary">Publish</button></td>
-                </tr>
+              <tbody id="show_here">
+
               </tbody>
             </table>
 <!-- show section ends -->
@@ -117,44 +115,13 @@
         <div id="edit" class="container">
           <h6>Enter ID of Product which you want to Edit :</h6>
           <form class="form-inline my-2 my-lg-0">
-            <input class="form-control mr-sm-2" type="search" placeholder="Product ID" aria-label="Search">
-            <button class="btn btn-outline-warning my-2 my-sm-0" type="submit">Search</button>
+            <input class="form-control mr-sm-2" type="search" placeholder="Product ID" aria-label="Search" name="product_id" id="product_id">
+            <button class="btn btn-outline-success my-2 my-sm-0" type="button"  id="edit_search_button">Search</button>
           </form>
-          <!-- <form id="for_edit">
-          <div class="form-group">
-          <label for="exampleFormControlInput1">Product ID</label>
-          <input type="text" class="form-control" placeholder="Product ID">
-        </div>
-        <div class="form-group">
-          <label for="exampleFormControlInput1">Name</label>
-          <input type="text" class="form-control" placeholder="Name">
-        </div>
-        <div class="form-group">
-          <label for="exampleFormControlTextarea1">Description</label>
-          <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" placeholder="Write here"></textarea>
-        </div>
-        <div class="form-group">
-          <label for="exampleFormControlInput1">Price</label>
-          <input type="text" class="form-control" placeholder=" Rs/-">
-        </div>
-        <div class="form-group">
-            <label for="exampleFormControlFile1">Image</label>
-            <input type="file" class="form-control-file" id="exampleFormControlFile1">
-          </div>
-          <div class="form-group">
-            <label for="exampleFormControlInput1">Category</label>
-            <input type="text" class="form-control" placeholder="Category">
-          </div>
-          <div class="form-group">
-            <label for="exampleFormControlSelect1">Page</label>
-            <select class="form-control" id="exampleFormControlSelect1">
-              <option>Products</option>
-              <option>Home</option>
-              <option>Manufacture</option>
-            </select>
-          </div>
-          <button type="submit" class="btn btn-primary">Edit</button>
-        </form> -->
+          <form id="for_edit" enctype="multipart/form-data">
+
+
+        </form>
       </div>
       <!-- edit section ends -->
 
@@ -185,6 +152,7 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.min.js" integrity="sha384-+sLIOodYLS7CIrQpBjl+C7nPvqq+FbNUBDunl/OZv93DB7Ln/533i8e/mZXLi/P+" crossorigin="anonymous"></script>
     -->
     <script>
+
     $(document).ready(function(){
 
       // logout
@@ -213,6 +181,22 @@
           $("#add").hide('fast','swing');
           $("#edit").hide('fast','swing');
           $("#delete").hide('fast','swing');
+          $.ajax({
+                type: "POST",
+                data: {"show":"show"},
+                url: "RequestHandler.php",
+                success: function(result){
+                    if(result){
+                      $('#show_here').html(result);
+                    } else {
+                      window.alert(result);
+                    }
+                },
+                error: function (result) {
+                    // **alert('error; ' + eval(error));**
+                    window.alert('Error')
+                }
+            });
         });
 
         // add
@@ -229,6 +213,26 @@
           $("#show").hide('fast','swing');
           $("#add").hide('fast','swing');
           $("#delete").hide('fast','swing');
+        });
+
+        $("#edit_search_button").click(function(){
+          let product_id = $("#product_id").val();
+          $.ajax({
+                type: "POST",
+                data: {"search_product_id":product_id},
+                url: "RequestHandler.php",
+                success: function(result){
+                    if(result){
+                      $('#for_edit').html(result);
+                    } else {
+                      window.alert(result);
+                    }
+                },
+                error: function (result) {
+                    // **alert('error; ' + eval(error));**
+                    window.alert('Error')
+                }
+            });
         });
 
         // delete
