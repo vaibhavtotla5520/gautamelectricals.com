@@ -6,7 +6,8 @@ class Main {
     public function connect_db() {
         // db connection details
         // Create connection
-        $conn = new mysqli('localhost', 'root', '', 'test');
+        // $conn = new mysqli('localhost', 'root', '', 'test');
+        $conn = new mysqli('103.118.16.254', 'gautamel_admin', 'Gautam@123', 'gautamel_main');
 
         // Check connection
         if ($conn->connect_error) {
@@ -67,7 +68,7 @@ class Main {
             $conn->close();
             return $data;
         } else {
-            return "No Products Found";
+            return false;
         }
     }
 
