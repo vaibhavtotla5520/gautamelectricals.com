@@ -119,8 +119,27 @@ if (isset($_POST['show'])) {
                   <td><img src="assets/images/' . $data['image'] . '" width="100px"/></td>
                   <td>' . $data['category'] . '</td>
                   <td>' . $data['page'] . '</td>
-                  <td><button class="btn btn-' . $status_button . '">' . $data['status'] . '</button></td>
+                  <td>
+                  <form action="RequestHandler.php" method="post"><input type="hidden" name="id" value="' . $data['id'] . '">
+                  <button class="btn btn-' . $status_button . '" type="submit" name="change_status" value="' . $data['status'] . '">' . $data['status'] . '</button>
+                  </form>
+                  </td>
                 </tr>';
+    }
+}
+
+if (isset($_POST['change_status'])) {
+    $status = '';
+    if ($_POST['change_status'] == 'Publish') {
+        $status = 'Published';
+    } else if ($_POST['change_status'] == 'Published') {
+        $status = 'Publish';
+    } else {
+        // $status = $_POST['change_status'];
+    }
+    $result = $callTo->change_status($_POST['id'], $status);
+    if ($result) {
+        header('location:admin.php?msg=Status%20' . $status . '%20Updated');
     }
 }
 

@@ -122,6 +122,18 @@ class Main {
         $conn = $this->connect_db();
         $sql = "DELETE FROM products_ge WHERE id = '$id';";
         if ($conn->query($sql) === TRUE) {
+            $conn->close();
+            return true;
+        } else {
+            return "Error: " . $sql . "<br>" . $conn->error;
+        }
+    }
+
+    public function change_status($id, $status) {
+        $conn = $this->connect_db();
+        $sql = "UPDATE products_ge SET status = '$status' WHERE id = '$id';";
+        if ($conn->query($sql) === TRUE) {
+            $conn->close();
             return true;
         } else {
             return "Error: " . $sql . "<br>" . $conn->error;

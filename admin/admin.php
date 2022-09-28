@@ -10,7 +10,13 @@ if (!isset($_SESSION['username'])) {
 }
 
 if (isset($_GET['msg'])) {
-    echo "<script>alert('" . $_GET['msg'] . "');</script>";
+    echo "
+    <script>
+        alert('" . $_GET['msg'] . "');
+        url = window.location.href;
+        url = url.substring(0, url.indexOf('?'));
+        window.location.assign(url);
+    </script>";
 }
 ?>
 <!doctype html>
