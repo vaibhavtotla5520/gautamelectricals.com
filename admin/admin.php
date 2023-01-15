@@ -35,8 +35,13 @@ if (isset($_GET['msg'])) {
         #add,
         #edit,
         #delete,
-        #show {
+        #show,
+        #pagination {
             display: none;
+        }
+
+        #next,#previous {
+            cursor: pointer;
         }
     </style>
 </head>
@@ -151,11 +156,79 @@ if (isset($_GET['msg'])) {
 
             </div>
         </div>
+        <nav id="pagination">
+            <ul class="pagination justify-content-end">
+                <li class="page-item">
+                    <a class="page-link" id="previous" tabindex="-1" aria-disabled="true" onclick="previous();">Previous</a>
+                </li>
+                <li class="page-item"><a class="page-link" id="current">1</a></li>
+                <!-- <li class="page-item"><a class="page-link" href="#">2</a></li>
+                <li class="page-item"><a class="page-link" href="#">3</a></li> -->
+                <li class="page-item">
+                    <a class="page-link" id="next" onclick="next();">Next</a>
+                </li>
+            </ul>
+        </nav>
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-Fy6S3B9q64WdZWQUiU+q4/2Lc9npb8tCaSX9FK7E8HnRr0Jz8D6OP9dO5Vg3Q9ct" crossorigin="anonymous"></script>
 
     <script>
+        var current = document.getElementById('current').innerHTML;
+        let limit = 6;
+        function next() {
+            var offset = current*limit;
+            current = parseInt(current)+1;
+            document.getElementById('current').innerHTML = current;
+            $.ajax({
+                    type: "POST",
+                    data: {
+                        "show": "show",
+                        "limit": limit,
+                        "offset": offset
+                    },
+                    url: "RequestHandler.php",
+                    success: function(result) {
+                        if (result) {
+                            $('#show_here').html(result);
+                        } else {
+                            window.alert(result);
+                        }
+                    },
+                    error: function(result) {
+                        // **alert('error; ' + eval(error));**
+                        window.alert('Error')
+                    }
+                });
+        }
+        function previous() {
+            if(current != 1) {
+                current = parseInt(current)-1;
+                document.getElementById('current').innerHTML = current;
+                var offset = current*limit - limit;
+                $.ajax({
+                    type: "POST",
+                    data: {
+                        "show": "show",
+                        "limit": limit,
+                        "offset": offset
+                    },
+                    url: "RequestHandler.php",
+                    success: function(result) {
+                        if (result) {
+                            $('#show_here').html(result);
+                        } else {
+                            window.alert(result);
+                        }
+                    },
+                    error: function(result) {
+                        // **alert('error; ' + eval(error));**
+                        window.alert('Error')
+                    }
+                });
+            }
+        }
+
         $(document).ready(function() {
 
             // logout
@@ -186,10 +259,13 @@ if (isset($_GET['msg'])) {
                 $("#add").hide('fast', 'swing');
                 $("#edit").hide('fast', 'swing');
                 $("#delete").hide('fast', 'swing');
+                $("#pagination").toggle('fast','swing');
                 $.ajax({
                     type: "POST",
                     data: {
-                        "show": "show"
+                        "show": "show",
+                        "limit": 6,
+                        "offset": 0
                     },
                     url: "RequestHandler.php",
                     success: function(result) {

@@ -6,12 +6,12 @@ class Main {
     public function connect_db() {
         // db connection details
         // Create connection
-        // $conn = new mysqli('localhost', 'root', '', 'test');
-        $conn = new mysqli('103.118.16.254', 'gautamel_admin', 'Gautam@123', 'gautamel_main');
+        $conn = new mysqli('localhost', 'root', '', 'gautamel_main');
+        // $conn = new mysqli('103.118.16.254', 'gautamel_admin', 'Gautam@123', 'gautamel_main');
 
         // Check connection
         if ($conn->connect_error) {
-            die("Connection failed: " . $conn->connect_error);
+            return("Connection failed: " . $conn->connect_error);
         }
         return $conn;
     }
@@ -53,10 +53,10 @@ class Main {
         }
     }
 
-    public function show_product() {
+    public function show_product($offset, $limit) {
         // show product
         $conn = $this->connect_db();
-        $sql = "SELECT * FROM products_ge ORDER BY id DESC LIMIT 7;";
+        $sql = "SELECT * FROM products_ge ORDER BY id DESC LIMIT $limit OFFSET $offset;";
         $result = $conn->query($sql);
         $list_product = [];
         if ($result->num_rows > 0) {

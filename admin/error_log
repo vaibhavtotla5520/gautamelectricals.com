@@ -1,0 +1,7 @@
+[15-Sep-2022 14:46:17 UTC] PHP Warning:  mysqli::__construct(): (HY000/1045): Access denied for user 'root'@'localhost' (using password: NO) in /home/gautamel/public_html/admin/Main.php on line 7
+[15-Sep-2022 14:48:10 UTC] PHP Warning:  mysqli::__construct(): (HY000/1045): Access denied for user 'root'@'localhost' (using password: NO) in /home/gautamel/public_html/admin/Main.php on line 7
+[15-Sep-2022 14:48:35 UTC] PHP Warning:  mysqli::__construct(): (HY000/1045): Access denied for user 'root'@'localhost' (using password: NO) in /home/gautamel/public_html/admin/Main.php on line 7
+[15-Sep-2022 14:49:01 UTC] PHP Warning:  mysqli::__construct(): (HY000/1045): Access denied for user 'root'@'localhost' (using password: NO) in /home/gautamel/public_html/admin/Main.php on line 7
+[15-Sep-2022 14:49:08 UTC] PHP Warning:  mysqli::__construct(): (HY000/1045): Access denied for user 'root'@'localhost' (using password: NO) in /home/gautamel/public_html/admin/Main.php on line 7
+[15-Sep-2022 14:49:29 UTC] PHP Warning:  mysqli::__construct(): (HY000/1045): Access denied for user 'gautamel_admin'@'localhost' (using password: NO) in /home/gautamel/public_html/admin/Main.php on line 7
+[15-Sep-2022 14:50:01 UTC] PHP Warning:  mysqli::__construct(): (HY000/1045): Access denied for user 'gautamel_admin'@'localhost' (using password: NO) in /home/gautamel/public_html/admin/Main.php on line 7

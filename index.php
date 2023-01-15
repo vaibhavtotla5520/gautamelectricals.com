@@ -5,21 +5,20 @@
 <!-- ======= Hero Section ======= -->
 <section id="hero" class="d-flex align-items-center">
 
-  <div class="container" data-aos="zoom-out" data-aos-delay="100">
-
+  <div class="container-fluid" data-aos="zoom-out" data-aos-delay="100">
     <div class="row">
-      <div class="wrapper" style="z-index:-1; position:absolute; width:150%;">
-        <div class="sliding-background"></div>
-      </div>
-      <div class="col-xl-6">
-        <h1>Get a boost in your Industry</h1>
-        <h2>We are team of talented Engineer, making Industrial tech better</h2>
-        <a href="#about" class="btn-get-started scrollto">Get Started</a>
-      </div>
+     <div class="wrapper" style="z-index:-1; position:absolute; width:150%;">
+       <div class="sliding-background"></div>
+     </div>
+     <div class="col-xl-6">
+       <h1 style="color: #fff;">Get a boost in your Industry</h1>
+       <h2 style="color: #fff;">We are team of talented Engineer, making Industrial tech better</h2>
+       <a href="#about" class="btn-get-started scrollto">Get Started</a>
+     </div>
     </div>
   </div>
 
-</section><!-- End Hero -->
+</section><!-- End  -->
 
 <main id="main">
 
@@ -135,7 +134,7 @@
   </section><!-- End Counts Section -->
 
   <!-- Page Content -->
-  <div class="container">
+  <!-- <div class="container">
 
     <div class="section-title">
       <h2>Best Seller Product</h2>
@@ -143,36 +142,45 @@
     </div>
 
     <div class="row">
-
-      <?php $sql = "SELECT * FROM `products` WHERE `product_status`='1' ORDER BY product_id  DESC LIMIT 6;";
-      if ($result = mysqli_query($conn, $sql)) {
-        if (mysqli_num_rows($result) > 0) {
-          while ($row = mysqli_fetch_array($result)) { ?>
-
             <div class="col-lg-4 col-sm-6 mb-4">
               <div class="card h-100">
-                <a href="#"><img class="card-img-top" src="admin/image/<?php echo $row['product_image']; ?>" alt=""></a>
+                <a href="#"><img class="card-img-top" src="admin/image/" alt=""></a>
                 <div class="card-body">
                   <h4 class="card-title">
-                    <a href="product.php?id=<?php echo $row['product_id']; ?>"><?php echo $row['product_name']; ?></a>
+                    <a href="product.php?id="></a>
                   </h4>
-                  <p class="card-text"><?php echo $row['product_description']; ?></p>
+                  <p class="card-text"></p>
                 </div>
               </div>
             </div>
 
-      <?php }
-        }
-      } ?>
 
-    </div>
+    </div> -->
     <!-- /.row -->
 
 
   </div>
   <!-- /.container -->
 
-
+  <?php
+  require_once "admin/Main.php";
+  $conn = new Main;
+  $conn = $conn->connect_db();
+  if($conn) {
+    $result = $conn->query("SELECT name,image,status FROM products_ge WHERE product_id LIKE 'HOME%';");
+    $products_arr = [];
+    if ($result->num_rows > 0) {
+      while ($row = $result->fetch_assoc()) {
+        if($row["status"] == "Published")
+          $products_arr[] = $row;
+      }
+      $conn->close();
+    }
+  }
+  // print_r($products_arr);die;
+  if(!empty($products_arr))
+  {
+?>
   <!-- ======= Picture Gallery Section ======= -->
   <section id="portfolio" class="portfolio">
     <div class="container" data-aos="fade-up">
@@ -181,7 +189,6 @@
         <h2>Picture Gallery</h2>
         <p>Just a pinch of our work</p>
       </div>
-
       <div class="row" data-aos="fade-up" data-aos-delay="100">
         <div class="col-lg-12 d-flex justify-content-center">
           <ul id="portfolio-flters">
@@ -197,12 +204,12 @@
 
         <div class="col-lg-4 col-md-6 portfolio-item filter-app">
           <div class="portfolio-wrap">
-            <img src="assets/img/portfolio/service3.png" class="img-fluid" alt="">
+            <img src="/admin/assets/images/<?php echo $products_arr[0]["image"]; ?>" class="img-fluid" alt="">
             <div class="portfolio-info">
-              <h4>Panel Maintainence</h4>
+              <h4><?php echo $products_arr[0]["name"]; ?></h4>
               <p></p>
               <div class="portfolio-links">
-                <a href="assets/img/portfolio/service3.png" data-gallery="portfolioGallery" class="portfolio-lightbox" title=""><i class="bx bx-plus"></i></a>
+                <a href="/admin/assets/images/<?php echo $products_arr[0]["image"]; ?>" data-gallery="portfolioGallery" class="portfolio-lightbox" title=""><i class="bx bx-plus"></i></a>
               </div>
             </div>
           </div>
@@ -210,12 +217,12 @@
 
         <div class="col-lg-4 col-md-6 portfolio-item filter-web">
           <div class="portfolio-wrap">
-            <img src="assets/img/portfolio/relays.png" class="img-fluid" alt="">
+            <img src="/admin/assets/images/<?php echo $products_arr[1]["image"]; ?>" class="img-fluid" alt="">
             <div class="portfolio-info">
-              <h4>Relays</h4>
+              <h4><?php echo $products_arr[1]["name"]; ?></h4>
               <p></p>
               <div class="portfolio-links">
-                <a href="assets/img/portfolio/portfolio-2.html" data-gallery="portfolioGallery" class="portfolio-lightbox" title=""><i class="bx bx-plus"></i></a>
+                <a href="/admin/assets/images/<?php echo $products_arr[1]["image"]; ?>" data-gallery="portfolioGallery" class="portfolio-lightbox" title=""><i class="bx bx-plus"></i></a>
               </div>
             </div>
           </div>
@@ -223,12 +230,12 @@
 
         <div class="col-lg-4 col-md-6 portfolio-item filter-app">
           <div class="portfolio-wrap">
-            <img src="assets/img/portfolio/service2.jpg" class="img-fluid" alt="">
+            <img src="/admin/assets/images/<?php echo $products_arr[2]["image"]; ?>" class="img-fluid" alt="">
             <div class="portfolio-info">
-              <h4>Power Factor Maintainence</h4>
+              <h4><?php echo $products_arr[2]["name"]; ?></h4>
               <p></p>
               <div class="portfolio-links">
-                <a href="assets/img/portfolio/service2.jpg" data-gallery="portfolioGallery" class="portfolio-lightbox" title=""><i class="bx bx-plus"></i></a>
+                <a href="/admin/assets/images/<?php echo $products_arr[2]["image"]; ?>" data-gallery="portfolioGallery" class="portfolio-lightbox" title=""><i class="bx bx-plus"></i></a>
               </div>
             </div>
           </div>
@@ -236,12 +243,12 @@
 
         <div class="col-lg-4 col-md-6 portfolio-item filter-card">
           <div class="portfolio-wrap">
-            <img src="assets/img/portfolio/manf1.jpg" class="img-fluid" alt="">
+            <img src="/admin/assets/images/<?php echo $products_arr[3]["image"]; ?>" class="img-fluid" alt="">
             <div class="portfolio-info">
-              <h4>Automation Panel</h4>
+              <h4><?php echo $products_arr[3]["name"]; ?></h4>
               <p></p>
               <div class="portfolio-links">
-                <a href="assets/img/portfolio/manf1.jpg" data-gallery="portfolioGallery" class="portfolio-lightbox" title=""><i class="bx bx-plus"></i></a>
+                <a href="/admin/assets/images/<?php echo $products_arr[3]["image"]; ?>" data-gallery="portfolioGallery" class="portfolio-lightbox" title=""><i class="bx bx-plus"></i></a>
               </div>
             </div>
           </div>
@@ -249,12 +256,12 @@
 
         <div class="col-lg-4 col-md-6 portfolio-item filter-web">
           <div class="portfolio-wrap">
-            <img src="assets/img/portfolio/contracter.png" class="img-fluid" alt="">
+            <img src="/admin/assets/images/<?php echo $products_arr[4]["image"]; ?>" class="img-fluid" alt="">
             <div class="portfolio-info">
-              <h4>Contacters</h4>
+              <h4><?php echo $products_arr[4]["name"]; ?></h4>
               <p></p>
               <div class="portfolio-links">
-                <a href="assets/img/portfolio/portfolio-5.html" data-gallery="portfolioGallery" class="portfolio-lightbox" title=""><i class="bx bx-plus"></i></a>
+                <a href="/admin/assets/images/<?php echo $products_arr[4]["image"]; ?>" data-gallery="portfolioGallery" class="portfolio-lightbox" title=""><i class="bx bx-plus"></i></a>
                 <a href="portfolio-details.html" title="More Details"><i class="bx bx-link"></i></a>
               </div>
             </div>
@@ -263,12 +270,12 @@
 
         <div class="col-lg-4 col-md-6 portfolio-item filter-app">
           <div class="portfolio-wrap">
-            <img src="assets/img/portfolio/service1.jpg" class="img-fluid" alt="">
+            <img src="/admin/assets/images/<?php echo $products_arr[5]["image"]; ?>" class="img-fluid" alt="">
             <div class="portfolio-info">
-              <h4>Panel Restoration</h4>
+              <h4><?php echo $products_arr[5]["name"]; ?></h4>
               <p></p>
               <div class="portfolio-links">
-                <a href="assets/img/portfolio/service1.jpg" data-gallery="portfolioGallery" class="portfolio-lightbox" title=""><i class="bx bx-plus"></i></a>
+                <a href="/admin/assets/images/<?php echo $products_arr[5]["image"]; ?>" data-gallery="portfolioGallery" class="portfolio-lightbox" title=""><i class="bx bx-plus"></i></a>
               </div>
             </div>
           </div>
@@ -276,12 +283,12 @@
 
         <div class="col-lg-4 col-md-6 portfolio-item filter-card">
           <div class="portfolio-wrap">
-            <img src="assets/img/portfolio/manf3.jpg" class="img-fluid" alt="">
+            <img src="/admin/assets/images/<?php echo $products_arr[6]["image"]; ?>" class="img-fluid" alt="">
             <div class="portfolio-info">
-              <h4>MCC/PCC Panel</h4>
+              <h4><?php echo $products_arr[6]["name"]; ?></h4>
               <p></p>
               <div class="portfolio-links">
-                <a href="assets/img/portfolio/manf3.jpg" data-gallery="portfolioGallery" class="portfolio-lightbox" title=""><i class="bx bx-plus"></i></a>
+                <a href="/admin/assets/images/<?php echo $products_arr[6]["image"]; ?>" data-gallery="portfolioGallery" class="portfolio-lightbox" title=""><i class="bx bx-plus"></i></a>
               </div>
             </div>
           </div>
@@ -289,12 +296,12 @@
 
         <div class="col-lg-4 col-md-6 portfolio-item filter-card">
           <div class="portfolio-wrap">
-            <img src="assets/img/portfolio/manf4.jpg" class="img-fluid" alt="">
+            <img src="/admin/assets/images/<?php echo $products_arr[7]["image"]; ?>" class="img-fluid" alt="">
             <div class="portfolio-info">
-              <h4>Power Factor Panel</h4>
+              <h4><?php echo $products_arr[7]["name"]; ?></h4>
               <p></p>
               <div class="portfolio-links">
-                <a href="assets/img/portfolio/manf4.jpg" data-gallery="portfolioGallery" class="portfolio-lightbox" title=""><i class="bx bx-plus"></i></a>
+                <a href="/admin/assets/images/<?php echo $products_arr[7]["image"]; ?>" data-gallery="portfolioGallery" class="portfolio-lightbox" title=""><i class="bx bx-plus"></i></a>
               </div>
             </div>
           </div>
@@ -302,12 +309,12 @@
 
         <div class="col-lg-4 col-md-6 portfolio-item filter-web">
           <div class="portfolio-wrap">
-            <img src="assets/img/portfolio/portfolio-9.html" class="img-fluid" alt="">
+            <img src="/admin/assets/images/<?php echo $products_arr[8]["image"]; ?>" class="img-fluid" alt="">
             <div class="portfolio-info">
-              <h4>MCCB</h4>
+              <h4><?php echo $products_arr[8]["name"]; ?></h4>
               <p></p>
               <div class="portfolio-links">
-                <a href="assets/img/portfolio/mccbs.png" data-gallery="portfolioGallery" class="portfolio-lightbox" title=""><i class="bx bx-plus"></i></a>
+                <a href="/admin/assets/images/<?php echo $products_arr[8]["image"]; ?>" data-gallery="portfolioGallery" class="portfolio-lightbox" title=""><i class="bx bx-plus"></i></a>
               </div>
             </div>
           </div>
@@ -317,7 +324,9 @@
 
     </div>
   </section><!-- End Picture Gallery Section -->
-
+<?php
+}
+?>
   <!-- ======= About Section ======= -->
   <section id="About" class="services section-bg ">
     <div class="container" data-aos="fade-up">
@@ -453,55 +462,64 @@
       <ul class="faq-list accordion" data-aos="fade-up">
 
         <li>
-          <a data-bs-toggle="collapse" class="collapsed" data-bs-target="#faq1">Non consectetur a erat nam at lectus urna duis? <i class="bx bx-chevron-down icon-show"></i><i class="bx bx-x icon-close"></i></a>
+          <a data-bs-toggle="collapse" class="collapsed" data-bs-target="#faq1">What are the company details of Gautam Electricals ? <i class="bx bx-chevron-down icon-show"></i><i class="bx bx-x icon-close"></i></a>
           <div id="faq1" class="collapse" data-bs-parent=".faq-list">
             <p>
-              Feugiat pretium nibh ipsum consequat. Tempus iaculis urna id volutpat lacus laoreet non curabitur gravida. Venenatis lectus magna fringilla urna porttitor rhoncus dolor purus non.
+            Since inception in the year 1992, Gautam Electricals has flourished in leaps and bounds under the eminent headship of Mr. Nitin Pratap Singh (Chairman). The company is renowned as amidst the supreme Electrical Panel  Manufacturers, Suppliers and Exporters. with quality products and prompt services, the company has gained some very esteem clients and many more.
             </p>
           </div>
         </li>
 
         <li>
-          <a data-bs-toggle="collapse" data-bs-target="#faq2" class="collapsed">Feugiat scelerisque varius morbi enim nunc faucibus a pellentesque? <i class="bx bx-chevron-down icon-show"></i><i class="bx bx-x icon-close"></i></a>
+          <a data-bs-toggle="collapse" data-bs-target="#faq2" class="collapsed">Why are Electrical Panel made by Gautam Electricals different? <i class="bx bx-chevron-down icon-show"></i><i class="bx bx-x icon-close"></i></a>
           <div id="faq2" class="collapse" data-bs-parent=".faq-list">
             <p>
-              Dolor sit amet consectetur adipiscing elit pellentesque habitant morbi. Id interdum velit laoreet id donec ultrices. Fringilla phasellus faucibus scelerisque eleifend donec pretium. Est pellentesque elit ullamcorper dignissim. Mauris ultrices eros in cursus turpis massa tincidunt dui.
+            The Electrical Panel , manufactured by Gautam Electricals, are known to exhibit attributes such as compact design, fully tested and excellent quality complying to ISO standards. In addition to this, epoxy power finishing is also provided to make the panels resistant to wear and tear conditions. Moreover, to assist the buyers with after sales services, a team of professionals is appointed.
             </p>
           </div>
         </li>
 
         <li>
-          <a data-bs-toggle="collapse" data-bs-target="#faq3" class="collapsed">Dolor sit amet consectetur adipiscing elit pellentesque habitant morbi? <i class="bx bx-chevron-down icon-show"></i><i class="bx bx-x icon-close"></i></a>
+          <a data-bs-toggle="collapse" data-bs-target="#faq3" class="collapsed">Where do you manufacture the Electrical Panel ? <i class="bx bx-chevron-down icon-show"></i><i class="bx bx-x icon-close"></i></a>
           <div id="faq3" class="collapse" data-bs-parent=".faq-list">
             <p>
-              Eleifend mi in nulla posuere sollicitudin aliquam ultrices sagittis orci. Faucibus pulvinar elementum integer enim. Sem nulla pharetra diam sit amet nisl suscipit. Rutrum tellus pellentesque eu tincidunt. Lectus urna duis convallis convallis tellus. Urna molestie at elementum eu facilisis sed odio morbi quis
+            The Electrical Panel  are manufactured in the state-of-the-art infrastructural facility. The in-house manufacturing unit us installed with all modern machines and facilities that help in the manufacturing of fault-free electric panels. Thus, special measures are also taken to ensure compliance with the ISO quality standards.
             </p>
           </div>
         </li>
 
         <li>
-          <a data-bs-toggle="collapse" data-bs-target="#faq4" class="collapsed">Ac odio tempor orci dapibus. Aliquam eleifend mi in nulla? <i class="bx bx-chevron-down icon-show"></i><i class="bx bx-x icon-close"></i></a>
+          <a data-bs-toggle="collapse" data-bs-target="#faq4" class="collapsed">What is the range of Electric Panels offered by Gautam Electricals? <i class="bx bx-chevron-down icon-show"></i><i class="bx bx-x icon-close"></i></a>
           <div id="faq4" class="collapse" data-bs-parent=".faq-list">
             <p>
-              Dolor sit amet consectetur adipiscing elit pellentesque habitant morbi. Id interdum velit laoreet id donec ultrices. Fringilla phasellus faucibus scelerisque eleifend donec pretium. Est pellentesque elit ullamcorper dignissim. Mauris ultrices eros in cursus turpis massa tincidunt dui.
+            Gautam Electricals offers a huge range of Electric Panels to meet the varied needs of the industrial application area. The range includes LT Distribution Panel, Load Management Panel, DG Synchronization Panel, Outdoor Power Panel, HT Panel, etc. <a href="#">Click Here</a> to view the complete range of Electric Panels.
             </p>
           </div>
         </li>
 
         <li>
-          <a data-bs-toggle="collapse" data-bs-target="#faq5" class="collapsed">Tempus quam pellentesque nec nam aliquam sem et tortor consequat? <i class="bx bx-chevron-down icon-show"></i><i class="bx bx-x icon-close"></i></a>
+          <a data-bs-toggle="collapse" data-bs-target="#faq5" class="collapsed">What makes you count as best Electrical Panel manufacturers? <i class="bx bx-chevron-down icon-show"></i><i class="bx bx-x icon-close"></i></a>
           <div id="faq5" class="collapse" data-bs-parent=".faq-list">
             <p>
-              Molestie a iaculis at erat pellentesque adipiscing commodo. Dignissim suspendisse in est ante in. Nunc vel risus commodo viverra maecenas accumsan. Sit amet nisl suscipit adipiscing bibendum est. Purus gravida quis blandit turpis cursus in
+            Gautam Electricals is counted amidst the best Electrical Panel  manufacturers for delivering panels that are engineered for quality and performance. Adopting ethical business practices and customer centric approach, Compamy has accomplished more than 900 projects and earned satisfaction from more than 500 clients.
             </p>
           </div>
         </li>
 
         <li>
-          <a data-bs-toggle="collapse" data-bs-target="#faq6" class="collapsed">Tortor vitae purus faucibus ornare. Varius vel pharetra vel turpis nunc eget lorem dolor? <i class="bx bx-chevron-down icon-show"></i><i class="bx bx-x icon-close"></i></a>
+          <a data-bs-toggle="collapse" data-bs-target="#faq6" class="collapsed">How to place bulk order for Electrical Panel made by Gautam Electricals ?<i class="bx bx-chevron-down icon-show"></i><i class="bx bx-x icon-close"></i></a>
           <div id="faq6" class="collapse" data-bs-parent=".faq-list">
             <p>
-              Laoreet sit amet cursus sit amet dictum sit amet justo. Mauris vitae ultricies leo integer malesuada nunc vel. Tincidunt eget nullam non nisi est sit amet. Turpis nunc eget lorem dolor sed. Ut venenatis tellus in metus vulputate eu scelerisque. Pellentesque diam volutpat commodo sed egestas egestas fringilla phasellus faucibus. Nibh tellus molestie nunc non blandit massa enim nec.
+            To place order for Electrical Panel , you can visit the head office located at S 3-77, IPIA, Road No.7, Kota, Rajasthan, India. ‘Quick Enquiry’ form is also available on the website to place your requirement. You can also fill the Contact Form so that the team can get in touch with you for your query.
+            </p>
+          </div>
+        </li>
+
+        <li>
+          <a data-bs-toggle="collapse" data-bs-target="#faq7" class="collapsed">How to contact the customer support service?<i class="bx bx-chevron-down icon-show"></i><i class="bx bx-x icon-close"></i></a>
+          <div id="faq7" class="collapse" data-bs-parent=".faq-list">
+            <p>
+            You can make your query by simply filling the form on the Contact Us page. You can call on +91 8619897216, +91 9829009977, on Mon - Sat 8:00 AM - 8:00 PM. For any further assistance, you van also write us at himanshu@gautamelectricals.com. Apart from that, you can also WhatsApp us about your query.
             </p>
           </div>
         </li>
@@ -543,7 +561,7 @@
         <div class="col-lg-3 col-md-6 d-flex align-items-stretch">
           <div class="member" data-aos="fade-up" data-aos-delay="200">
             <div class="member-img">
-              <img src="assets/img/team/team-.jpg" class="img-fluid" alt="">
+              <img src="assets/img/team/team-2.png" class="img-fluid" alt="">
               <div class="social">
                 <a href="#"><i class="bi bi-twitter"></i></a>
                 <a href="#"><i class="bi bi-facebook"></i></a>
@@ -636,99 +654,25 @@
   </section><!-- End Contact Section -->
 
 </main><!-- End #main -->
-<!-- ======= Footer ======= -->
-<footer id="footer">
+<script>
+let slideIndex = 0;
+showSlides();
 
-  <div class="footer-top">
-    <div class="container">
-      <div class="row">
-
-        <div class="col-lg-3 col-md-6 footer-contact">
-          <h3>Address<span>.</span></h3>
-          <p>
-            S3-77 <br>
-            IPIA, Road No.7, Kota, Rajasthan<br>
-            India<br><br>
-            <strong>Phone:</strong> +91 8619897216<br>
-            <strong>Alt Phone:</strong> +91 9829009977<br>
-            <strong>Email:</strong> info@gautamelectricals.com<br>
-          </p>
-        </div>
-
-        <!--<div class="col-lg-2 col-md-6 footer-links">
-            <h4>Useful Links</h4>
-            <ul>
-              <li><i class="bx bx-chevron-right"></i> <a href="#">Home</a></li>
-              <li><i class="bx bx-chevron-right"></i> <a href="#">About us</a></li>
-              <li><i class="bx bx-chevron-right"></i> <a href="#">Services</a></li>
-              <li><i class="bx bx-chevron-right"></i> <a href="#">Terms of service</a></li>
-              <li><i class="bx bx-chevron-right"></i> <a href="#">Privacy policy</a></li>
-            </ul>
-          </div>-->
-
-        <div class="col-lg-3 col-md-6 footer-links">
-          <h4>Our Services</h4>
-          <ul>
-            <li><i class="bx bx-chevron-right"></i> <a href="#">Panel Maintanece</a></li>
-            <li><i class="bx bx-chevron-right"></i> <a href="#">Power Factor</a></li>
-            <li><i class="bx bx-chevron-right"></i> <a href="#">Automation</a></li>
-            <li><i class="bx bx-chevron-right"></i> <a href="#">Site Suspection</a></li>
-            <li><i class="bx bx-chevron-right"></i> <a href="#">Panel Restoration</a></li>
-          </ul>
-        </div>
-
-        <!--<div class="col-lg-4 col-md-6 footer-newsletter">
-            <h4>Join Our Newsletter</h4>
-            <p>Tamen quem nulla quae legam multos aute sint culpa legam noster magna</p>
-            <form action="" method="post">
-              <input type="email" name="email"><input type="submit" value="Subscribe">
-            </form>
-          </div>-->
-
-      </div>
-    </div>
-  </div>
-
-  <div class="container d-md-flex py-4">
-
-    <div class="me-md-auto text-center text-md-start">
-      <div class="copyright">
-        &copy; Copyright <strong><span>Gautam Electricals</span></strong>. All Rights Reserved
-      </div>
-      <div class="credits">
-        <!-- All the links in the footer should remain intact. -->
-        <!-- You can delete the links only if you purchased the pro version. -->
-        <!-- Licensing information: https://bootstrapmade.com/license/ -->
-        <!-- Purchase the pro version with working PHP/AJAX contact form: https://bootstrapmade.com/presento-bootstrap-corporate-template/ -->
-      </div>
-    </div>
-    <div class="social-links text-center text-md-end pt-3 pt-md-0">
-      <a href="#" class="twitter"><i class="bx bxl-twitter"></i></a>
-      <a href="#" class="facebook"><i class="bx bxl-facebook"></i></a>
-      <a href="#" class="instagram"><i class="bx bxl-instagram"></i></a>
-      <a href="#" class="google-plus"><i class="bx bxl-skype"></i></a>
-      <a href="#" class="linkedin"><i class="bx bxl-linkedin"></i></a>
-    </div>
-  </div>
-</footer><!-- End Footer -->
-
-<a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
-
-<!-- Vendor JS Files -->
-<script src="assets/vendor/purecounter/purecounter.js"></script>
-<script src="assets/vendor/aos/aos.js"></script>
-<script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-<script src="assets/vendor/glightbox/js/glightbox.min.js"></script>
-<script src="assets/vendor/isotope-layout/isotope.pkgd.min.js"></script>
-<script src="assets/vendor/swiper/swiper-bundle.min.js"></script>
-<script src="assets/vendor/php-email-form/validate.js"></script>
-
-<!-- Template Main JS File -->
-<script src="assets/js/main.js"></script>
-
-</body>
-
-
-<!-- Mirrored from gautamelectricals.com/ by HTTrack Website Copier/3.x [XR&CO'2014], Mon, 30 May 2022 10:39:14 GMT -->
-
-</html>
+function showSlides() {
+  let i;
+  let slides = document.getElementsByClassName("mySlides");
+  let dots = document.getElementsByClassName("dot");
+  for (i = 0; i < slides.length; i++) {
+    slides[i].style.display = "none";  
+  }
+  slideIndex++;
+  if (slideIndex > slides.length) {slideIndex = 1}    
+  for (i = 0; i < dots.length; i++) {
+    dots[i].className = dots[i].className.replace(" active-carousel", "");
+  }
+  slides[slideIndex-1].style.display = "block";  
+  dots[slideIndex-1].className += " active-carousel";
+  setTimeout(showSlides, 5000); // Change image every 2 seconds
+}
+</script>
+<?php include 'includes/footer.php'; ?>

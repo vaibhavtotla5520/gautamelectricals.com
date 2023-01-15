@@ -105,9 +105,9 @@ if (isset($_POST['search_product_id'])) {
 }
 
 if (isset($_POST['show'])) {
-    $result = $callTo->show_product();
+    $result = $callTo->show_product($_POST['offset'],$_POST['limit']);
     if (!$result) {
-        die('Not Products found to show');
+        die('No Products found to show');
     }
     foreach ($result as $data) {
         $status_button = $data['status'] == 'Published' ? 'success' : 'warning';
